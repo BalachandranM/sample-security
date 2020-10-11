@@ -1,0 +1,49 @@
+ ########## application port ####################
+server:
+  port: 8017
+  servlet:
+    context-path: /sample-sec
+############ logging configuration ############### 
+logging:
+  file: /home/appowner/logfiles/${spring.application.name}.log
+  level:
+    com.spring.security: INFO
+---
+ ############# application name ###############
+spring:
+  application:
+    name: spring-security
+---
+spring:
+  profiles: dev
+  datasource:
+    username: 
+    password: 
+  cloud:
+    config:
+     enabled: true
+     format: ${config.server.format}
+     fail-fast: true
+     uri: 
+---
+spring:
+  profiles:
+    active:
+        - local
+  h2: 
+    console:
+        enabled: true
+  datasource:
+    url: jdbc:h2:mem:testdb
+    platform: h2
+    driverClassName: org.h2.Driver
+    username: user
+    password: bala
+    initialization-mode: always
+    data:
+    - classpath:DDL.sql
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true      
+    database-platform: org.hibernate.dialect.H2Dialect
